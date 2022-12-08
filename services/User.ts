@@ -2,6 +2,7 @@ import { User, userSchema } from "../interfaces/User";
 import UserModel from "../models/User";
 import Service, { ServiceError } from "./Service";
 import bcrypt from 'bcrypt';
+import Hash from "../utils/Hash";
 
 export default class UserService extends Service<User> {
     constructor(model = new UserModel()) {
@@ -23,9 +24,8 @@ export default class UserService extends Service<User> {
     public async login(email: string, password: string): Promise<User | null> {
         const user = await this.model.findByEmail(email);
         if (!user) return null;
-        const passwordDecoded = await bcrypt.compare(password, user.password!);
-        if (!passwordDecoded) return null;
-        return user;
+        const passwordDecoded = Hash.decrypt(user.password!);
+        if(passwordDecoded === password) return user;
+        return null;
     }
-
 }

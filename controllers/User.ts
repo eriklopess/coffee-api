@@ -4,6 +4,7 @@ import { User } from "../interfaces/User";
 import UserService from "../services/User";
 import Token from "../utils/Token";
 import Controller, { RequestWithBody, ResponseError } from "./Controller";
+import Hash from "../utils/Hash";
 
 type UserWithToken = User & { token: string };
 
@@ -22,7 +23,7 @@ export default class UserController extends Controller<User> {
             if (!req.body.password) {
                 return res.status(400).json({ error: 'Password is required.' });
             }
-            const password = await bcrypt.hash(req.body.password, 10);
+            const password = Hash.encrypt(req.body.password);
             const data = await this.user.create({ ...req.body, password });
             if('error' in data) return res.status(400).json(data);
             const token = new Token().sign({
@@ -30,7 +31,7 @@ export default class UserController extends Controller<User> {
                 email: data.email,
                 role: data.role
             });
-            res.cookie('token', token, { httpOnly: true });
+            res.cookie('token', token, { httpOnly: true, secure: true });
             return res.status(201).json(data);
         } catch (error) {
             console.log(error)
@@ -85,7 +86,7 @@ export default class UserController extends Controller<User> {
                 role: user.role
             });
 
-            res.cookie('token', token, { httpOnly: true });
+            res.cookie('token', token, { httpOnly: true, secure: true });
             return res.json({
                 name: user.name,
                 email: user.email,
@@ -93,6 +94,8 @@ export default class UserController extends Controller<User> {
                 token
             });
         } catch (error) {
+            console.log(error);
+            
             return res.status(500).json({ error: this.errors.internal });
         }
     }

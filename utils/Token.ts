@@ -1,4 +1,6 @@
 import * as jwt from 'jsonwebtoken';
+import crypto from 'crypto-js'
+import Hash from './Hash';
 
 export type tokenDecoded = {
     _id: string;
@@ -19,11 +21,15 @@ export default class Token {
     }
 
     sign = (payload: object): string => {
-        return jwt.sign(payload, this.secret, { expiresIn: this.expiresIn });
+        const token = jwt.sign(payload, this.secret, { expiresIn: this.expiresIn });
+        const tokenHash = Hash.encrypt(token);
+        return tokenHash;
     }
 
     verify = (token: string): object | string => {
-        return jwt.verify(token, this.secret);
+        const tokenHashDecoded = Hash.decrypt(token);
+        const tokenDecoded = jwt.verify(tokenHashDecoded, this.secret);
+        return tokenDecoded;
     }
 
     decode = (token: string): tokenDecoded | null => {
