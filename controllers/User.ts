@@ -31,8 +31,13 @@ export default class UserController extends Controller<User> {
                 email: data.email,
                 role: data.role
             });
-            res.cookie('token', token, { httpOnly: true, secure: true });
-            return res.status(201).json(data);
+            const tokenHash = Hash.encrypt(token);
+            res.cookie('token', tokenHash, { httpOnly: true, secure: true });
+            return res.status(201).json({
+                _id: data._id,
+                name: data.name,
+                email: data.email,
+            });
         } catch (error) {
             console.log(error)
             return res.status(400).json({ error: 'email already exists' });
@@ -85,8 +90,9 @@ export default class UserController extends Controller<User> {
                 email: user.email,
                 role: user.role
             });
+            const tokenHash = Hash.encrypt(token);
 
-            res.cookie('token', token, { httpOnly: true, secure: true });
+            res.cookie('token', tokenHash, { httpOnly: true, secure: true });
             return res.json({
                 name: user.name,
                 email: user.email,

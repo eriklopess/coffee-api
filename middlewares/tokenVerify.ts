@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../interfaces/User";
+import Hash from "../utils/Hash";
 import Token from "../utils/Token";
 
 const tokenVerify = (req: Request, res: Response, next: NextFunction): typeof res | void => {
@@ -8,7 +9,8 @@ const tokenVerify = (req: Request, res: Response, next: NextFunction): typeof re
         return res.status(401).json({ error: 'Unauthorized' });
     }
     try {
-        const payload = new Token().verify(token);
+        const tokenDecoded = Hash.decrypt(token);
+        const payload = new Token().verify(tokenDecoded);
         req.user = payload as User;
         return next();
     } catch (error) {
