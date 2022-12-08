@@ -31,10 +31,4 @@ export default class Token {
         const tokenDecoded = jwt.verify(tokenHashDecoded, this.secret);
         return tokenDecoded;
     }
-
-    decode = (token: string): tokenDecoded | null => {
-        const decoded = jwt.decode(token) as tokenDecoded;
-        if (!decoded) return null;
-        return decoded;
-    }
 }
