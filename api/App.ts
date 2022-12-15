@@ -5,6 +5,8 @@ import connectToDatabase from './connection';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import userRouter from '../routers/user';
+import orderRouter from '../routers/order';
+import coupomRouter from '../routers/coupom';
 export default class App {
     public app: express.Application;
 
@@ -21,6 +23,8 @@ export default class App {
     private routes(): void {
         this.app.use('/product', productRouter);
         this.app.use('/user', userRouter);
+        this.app.use('/order', orderRouter);
+        this.app.use('/coupom', coupomRouter);
     }
 
     public startServer(port: string | number): void {
