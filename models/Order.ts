@@ -77,7 +77,7 @@ const OrderSchema = new Schema({
 
 export default class OrderModel extends MongoModel<Order> {
     constructor(
-        public model = createModel<OrderDocument>('Orders', OrderSchema)
+        public model = createModel<OrderDocument>('orders', OrderSchema)
     ) {
         super(model);
     }

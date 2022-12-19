@@ -51,12 +51,11 @@ const CoupomSchema = new Schema<CoupomDocument>({
 
 export default class CoupomModel extends Model<Coupom> {
     constructor(
-        public model = createModel<CoupomDocument>('Coupoms', CoupomSchema)
+        public model = createModel<CoupomDocument>('coupoms', CoupomSchema)
     ) {
         super(model);
     }
     
-
     findByCode = async (code: string): Promise<Coupom | null> => this.model.findOne({
         code,
         status: true

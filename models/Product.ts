@@ -14,7 +14,7 @@ const ProductSchema = new Schema<ProductDocument>({
 
 export default class ProductModel extends Mongo<Product> {
     constructor(
-        public model = createModel<ProductDocument>('Products', ProductSchema)
+        public model = createModel<ProductDocument>('products', ProductSchema)
     ) {
         super(model);
     }

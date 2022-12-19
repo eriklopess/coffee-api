@@ -1,7 +1,6 @@
 import { User, userSchema } from "../interfaces/User";
 import UserModel from "../models/User";
 import Service, { ServiceError } from "./Service";
-import bcrypt from 'bcrypt';
 import Hash from "../utils/Hash";
 
 export default class UserService extends Service<User> {
