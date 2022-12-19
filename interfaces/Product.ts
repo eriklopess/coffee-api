@@ -22,7 +22,10 @@ export const productSchema = z.object({
     }),
     active: z.boolean().optional(),
     description: z.string({
-        invalid_type_error: 'description '
+        invalid_type_error: 'description must be a string.',
+        required_error: 'description is required.'
+    }).min(3, {
+        message: 'description must be at least 3 characters long.'
     }),
     images: z.array(z.string()).optional(),
 })

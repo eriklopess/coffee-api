@@ -17,7 +17,7 @@ export default abstract class MongoModel<T> implements Model<T> {
     update = async (id: string, obj: UpdateQuery<T>): Promise<T
     | null> => this.model.findOneAndUpdate({ _id: id }, { $set: obj }, { new: true });
 
-    delete = async (id: string): Promise<T | null> => this.model.findOneAndRemove(({ _id: id }));
+    delete = async (id: string): Promise<T | null> => this.model.findByIdAndRemove(({ _id: id }));
 
     findByEmail = async (email: string): Promise<T | null> => this.model.findOne({
         email,

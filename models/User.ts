@@ -20,7 +20,7 @@ export default class UserModel extends Model<User> {
     }
 
     readOne = async (id: string): Promise<User> => {
-        return await this.model.findOne({ _id: id, active: true }, { password: 0 }) as any as User;
+        return await this.model.findOne({ _id: id, active: true }, { password: 0, active: 0, __v: 0 }) as any as User;
     }
 
     delete = async (id: string): Promise<User> => {

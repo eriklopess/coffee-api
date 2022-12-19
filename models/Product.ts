@@ -18,4 +18,8 @@ export default class ProductModel extends Mongo<Product> {
     ) {
         super(model);
     }
+
+        readOne = async (id: string): Promise<Product | null> => {
+        return this.model.findOne({ _id: id, active: true }, { __v: 0, active: 0 });
+    }
 }

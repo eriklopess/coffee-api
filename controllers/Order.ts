@@ -76,6 +76,12 @@ export default class OrderController extends Controller<Order> {
             if(!data) {
                 return res.status(404).json({ error: this.errors.notFound });
             }
+            data.payment.card = {
+                number: `**** **** **** ${data.payment.card!.number!.slice(-4)}`,
+                expiration: undefined,
+                cvv: undefined,
+                name: data.payment.card!.name
+            };
             return res.json(data);
         } catch (error) {
             return res.status(400).json({ error: this.errors.internal });

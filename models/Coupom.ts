@@ -64,4 +64,8 @@ export default class CoupomModel extends Model<Coupom> {
     findByStatus = async (status: boolean): Promise<Coupom[] | null> => this.model.find({
         status
     });
+
+    delete = async (id: string): Promise<Coupom | null> => this.model.findByIdAndUpdate(id, {
+        status: false
+    });
 }

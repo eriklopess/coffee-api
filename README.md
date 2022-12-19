@@ -32,3 +32,232 @@ SECRET_KEY
 ### Iniciar a aplicação.
 
 Bom agora só iniciar a aplicação e testar as rotas que estão documentadas logo abaixo.
+
+## Documentação
+
+*Rotas com a marcação `!!` necessitam de login para ser acessadas.*
+*Rotas com a marcação `§§` necessitam de login de um administrador para ser acessadas.*
+
+### USER
+
+#### POST /user
+|Propriedade|Tipo|Requirido| Default |
+|--|--|--|--|
+|name|string|sim|
+|email|string|sim|
+|password|string|sim|
+|role|string|não|user|
+
+*Será retornado apenas as propriedades _id, name e email.*
+
+### POST /user/login
+
+|Propriedade|Tipo|Requirido
+|--|--|--|--|
+|email|string|sim|
+|password|string|sim|
+
+*Será retornado as propriedades name, email, role e token.*
+
+#### GET /user/:id
+
+|Propriedade|Tipo
+|--|--|
+|_id|string|
+|name|string|
+|email|string|
+|role|string|
+
+#### DELETE /user/:id
+
+##### Não retorna corpo!
+
+#### PUT /user/:id
+
+|Propriedade|Tipo|Requirido
+|--|--|--|--|
+|name|string|não|
+|email|string|não|
+|password|string|não|
+|role|string|não
+
+
+### PRODUCTS
+
+#### GET  /product
+**Array**
+|Propriedade|Tipo
+|--|--|
+|_id|string|
+|name|string|
+|description|string|
+|price|number|
+|stock|number|
+
+#### GET /product/:id
+|Propriedade|Tipo
+|--|--|
+|_id|string|
+|name|string|
+|description|string|
+|price|number|
+|stock|number|
+
+#### §§ POST /product
+
+|Propriedade|Tipo|Requirido
+|--|--|--|--|
+|name|string|sim|
+|price|number|sim|
+|stock|number|sim|
+|description|string|sim
+
+*Retorna as mesmas propriedades*
+
+#### §§ PUT /product/:id
+|Propriedade|Tipo|Requirido
+|--|--|--|
+|_id|string|não
+|name|string|não
+|description|string|não
+|price|number|não
+|stock|number|não
+
+#### §§ DELETE /product/:id
+##### Não retorna corpo!
+
+### COUPOM
+
+#### GET /coupom
+
+|Propriedade|Tipo
+|--|--|--|
+|_id|string
+|code|string
+|status|boolean
+|expires|object
+|discount| object
+|usages|number
+
+```js
+expires: {
+	type: enum['date', 'quantity', 'infinity'],
+	value: Date | number
+}
+
+discount: {
+	type: enum['percentage', 'amount'],
+	value: number
+```
+#### GET /coupom/:id
+
+|Propriedade|Tipo
+|--|--|--|
+|_id|string
+|code|string
+|status|boolean
+|expires|object
+|discount| object
+|usages|number
+
+```js
+expires: {
+	type: enum['date', 'quantity', 'infinity'],
+	value: Date | number
+}
+
+discount: {
+	type: enum['percentage', 'amount'],
+	value: number
+```
+#### §§ POST /coupom
+
+|Propriedade|Tipo | Requirido | Default
+|--|--|--|--|--|
+|code|string|sim
+|status|boolean|não|true
+|expires|object|não| infinity
+|discount| object|sim
+|usages|number|não| 0
+
+```js
+expires: {
+	type: enum['date', 'quantity', 'infinity'],
+	value: Date | number
+}
+
+discount: {
+	type: enum['percentage', 'amount'],
+	value: number
+```
+
+#### §§ PUT/coupom/:id
+
+|Propriedade|Tipo 
+|--|--|--|--|--|
+|code|string|sim
+|status|boolean|não|true
+|expires|object|não| infinity
+|discount| object|sim
+|usages|number|não| 0
+
+```js
+expires: {
+	type: enum['date', 'quantity', 'infinity'],
+	value: Date | number
+}
+
+discount: {
+	type: enum['percentage', 'amount'],
+	value: number
+```
+
+#### §§ DELETE/coupom/:id
+##### Não retorna corpo!
+
+### Order
+
+#### GET /order
+
+**Array**
+|Propriedade|Tipo 
+|--|--|--|--|--|
+|_id|string|
+|items|product[]|
+|user|string - user id
+|payment| object
+|createdAt| date
+
+```js
+payment: {
+	type: enum['credit', 'debit', 'pix'],
+	status: enum['pending', 'paid', 'refunded', 'cancelled'],
+	coupom?: string - coupom id,
+	total: number,
+	finalPrice: number
+}
+```
+
+#### GET /order/:id
+
+|Propriedade|Tipo 
+|--|--|--|--|--|
+|_id|string|
+|items|product[]|
+|user|string - user id
+|payment| object
+|createdAt| date
+
+```js
+payment: {
+	type: enum['credit', 'debit', 'pix'],
+	card?: {
+		number: string
+	} ,
+	status: enum['pending', 'paid', 'refunded', 'cancelled'],
+	coupom?: string - coupom id,
+	total: number,
+	finalPrice: number
+}
+```
+
