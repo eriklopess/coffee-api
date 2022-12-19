@@ -18,4 +18,12 @@ export default class UserModel extends MongoModel<User> {
     ) {
         super(model);
     }
+
+    readOne = async (id: string): Promise<User> => {
+        return await this.model.findOne({ _id: id, active: true }, { password: 0 }) as any as User;
+    }
+
+    delete = async (id: string): Promise<User> => {
+        return this.model.findByIdAndUpdate(id, { active: false }) as any as User;
+    }
 }

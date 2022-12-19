@@ -72,9 +72,10 @@ export default class UserController extends Controller<User> {
 
     delete = async (req: Request<{ id: string }>, res: Response<User | ResponseError> ): Promise<typeof res> => {
         try {
-            await this.user.delete(req.params.id);
-            return res.status(204);
+            const data = await this.user.delete(req.params.id);
+            return res.status(204).json();
         } catch (error) {
+            console.log(error);
             return res.status(500).json({ error: this.errors.internal });
         }
     }
