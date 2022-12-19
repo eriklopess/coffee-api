@@ -68,11 +68,11 @@ Bom agora só iniciar a aplicação e testar as rotas que estão documentadas lo
 |email|string|
 |role|string|
 
-#### DELETE /user/:id
+#### §§ DELETE /user/:id
 
 ##### Não retorna corpo!
 
-#### PUT /user/:id
+#### !! PUT /user/:id
 
 |Propriedade|Tipo|Requirido
 |--|--|--|--|
@@ -126,7 +126,7 @@ Bom agora só iniciar a aplicação e testar as rotas que estão documentadas lo
 #### §§ DELETE /product/:id
 ##### Não retorna corpo!
 
-### COUPOM
+### !! COUPOM
 
 #### GET /coupom
 
@@ -224,15 +224,15 @@ discount: {
 |--|--|--|--|--|
 |_id|string|
 |items|product[]|
-|user|string - user id
-|payment| object
-|createdAt| date
+|user|string - user id|
+|payment| object|
+|createdAt| date|
 
 ```js
 payment: {
 	type: enum['credit', 'debit', 'pix'],
 	status: enum['pending', 'paid', 'refunded', 'cancelled'],
-	coupom?: string - coupom id,
+	coupom?: string - coupom code,
 	total: number,
 	finalPrice: number
 }
@@ -244,9 +244,9 @@ payment: {
 |--|--|--|--|--|
 |_id|string|
 |items|product[]|
-|user|string - user id
-|payment| object
-|createdAt| date
+|user|string - user id|
+|payment| object|
+|createdAt| date|
 
 ```js
 payment: {
@@ -255,9 +255,59 @@ payment: {
 		number: string
 	} ,
 	status: enum['pending', 'paid', 'refunded', 'cancelled'],
-	coupom?: string - coupom id,
+	coupom?: string - coupom code,
 	total: number,
 	finalPrice: number
 }
 ```
 
+#### §§ POST /order
+|Propriedade|Tipo| Requirido | Default
+|--|--|--|--|
+|items|product[]| sim|
+|user|string - user id | não | id do usuário|
+|payment| object | sim |
+|createdAt| date | não | new Date()|
+
+```js
+payment: {
+	type: enum['credit', 'debit', 'pix'],
+	// Caso for for credit ou debit necessitará de adicionar o cartão
+	// Caso for pix, não precisa adicionar o cartão
+	card?: {
+		number: string,
+		name: string,
+		expiration: string, //ex: 12/25
+		cvv: string
+	} ,
+	status: enum['pending', 'paid', 'refunded', 'cancelled'],
+	coupom?: string - coupom code,
+	total: number,
+	finalPrice: number
+}
+```
+#### §§ PUT /order/:id
+|Propriedade|Tipo
+|--|--|--|--|--|
+|items|product[]|
+|user|string - user id |
+|payment|object|
+|createdAt|date|
+
+```js
+payment: {
+	type: enum['credit', 'debit', 'pix'],
+	// Caso for for credit ou debit necessitará de adicionar o cartão
+	// Caso for pix, não precisa adicionar o cartão
+	card?: {
+		number: string,
+		name: string,
+		expiration: string, //ex: 12/25
+		cvv: string
+	} ,
+	status: enum['pending', 'paid', 'refunded', 'cancelled'],
+	coupom?: string - coupom code,
+	total: number,
+	finalPrice: number
+}
+```
