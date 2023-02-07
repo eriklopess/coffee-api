@@ -34,9 +34,9 @@ export default class UserController extends Controller<User> {
             const tokenHash = Hash.encrypt(token);
             res.cookie('token', tokenHash, { httpOnly: true, secure: true });
             return res.status(201).json({
-                _id: data._id,
                 name: data.name,
                 email: data.email,
+                role: data.role,
             });
         } catch (error) {
             console.log(error)
