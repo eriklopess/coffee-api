@@ -14,6 +14,7 @@ Em seu primeiro passo você irá precisar utilizar o git para clonar este reposi
 
 Nessa segunda etapa você precisará abrir a pasta já clonada em seu terminal e digitar o seguinte comando.
 
+`cd server`
 `npm install`
 
 ### Adicionar variáveis de ambiente.
