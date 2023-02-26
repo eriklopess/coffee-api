@@ -54,7 +54,7 @@ Bom agora só iniciar a aplicação e testar as rotas que estão documentadas lo
 ### POST /user/login
 
 |Propriedade|Tipo|Requirido
-|--|--|--|--|
+|--|--|--|
 |email|string|sim|
 |password|string|sim|
 
@@ -76,7 +76,7 @@ Bom agora só iniciar a aplicação e testar as rotas que estão documentadas lo
 #### !! PUT /user/:id
 
 |Propriedade|Tipo|Requirido
-|--|--|--|--|
+|--|--|--|
 |name|string|não|
 |email|string|não|
 |password|string|não|
@@ -107,7 +107,7 @@ Bom agora só iniciar a aplicação e testar as rotas que estão documentadas lo
 #### §§ POST /product
 
 |Propriedade|Tipo|Requirido
-|--|--|--|--|
+|--|--|--|
 |name|string|sim|
 |price|number|sim|
 |stock|number|sim|
@@ -132,7 +132,7 @@ Bom agora só iniciar a aplicação e testar as rotas que estão documentadas lo
 #### GET /coupom
 
 |Propriedade|Tipo
-|--|--|--|
+|--|--|
 |_id|string
 |code|string
 |status|boolean
@@ -153,7 +153,7 @@ discount: {
 #### GET /coupom/:id
 
 |Propriedade|Tipo
-|--|--|--|
+|--|--|
 |_id|string
 |code|string
 |status|boolean
@@ -174,7 +174,7 @@ discount: {
 #### §§ POST /coupom
 
 |Propriedade|Tipo | Requirido | Default
-|--|--|--|--|--|
+|--|--|--|--|
 |code|string|sim
 |status|boolean|não|true
 |expires|object|não| infinity
@@ -195,7 +195,7 @@ discount: {
 #### §§ PUT/coupom/:id
 
 |Propriedade|Tipo 
-|--|--|--|--|--|
+|--|--|
 |code|string|sim
 |status|boolean|não|true
 |expires|object|não| infinity
@@ -222,7 +222,7 @@ discount: {
 
 **Array**
 |Propriedade|Tipo 
-|--|--|--|--|--|
+|--|--|
 |_id|string|
 |items|product[]|
 |user|string - user id|
@@ -242,7 +242,7 @@ payment: {
 #### GET /order/:id
 
 |Propriedade|Tipo 
-|--|--|--|--|--|
+|--|--|
 |_id|string|
 |items|product[]|
 |user|string - user id|
@@ -289,7 +289,7 @@ payment: {
 ```
 #### §§ PUT /order/:id
 |Propriedade|Tipo
-|--|--|--|--|--|
+|--|--|
 |items|product[]|
 |user|string - user id |
 |payment|object|
