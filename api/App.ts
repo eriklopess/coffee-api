@@ -8,11 +8,14 @@ import connectToDatabase from './connection';
 import userRouter from '../routers/user';
 import orderRouter from '../routers/order';
 import coupomRouter from '../routers/coupom';
+import csrf from 'csurf';
+
 export default class App {
     public app: express.Application;
 
     constructor() {
         this.app = express();
+        this.app.use(csrf({ cookie: true }));
         this.app.use(helmet());
         this.app.disable('x-powered-by');
         this.app.use(bodyParser.json());
