@@ -1,5 +1,4 @@
 import * as jwt from 'jsonwebtoken';
-import crypto from 'crypto-js'
 import Hash from './Hash';
 
 export type tokenDecoded = {
@@ -21,13 +20,13 @@ export default class Token {
     }
 
     sign = (payload: object): string => {
-        const token = jwt.sign(payload, this.secret, { expiresIn: this.expiresIn });
-        const tokenHash = Hash.encrypt(token);
+        const token = jwt.sign(payload, this.secret, { expiresIn: this.expiresIn }); // Somente assinar o token com JWT já é suficiente.
+        const tokenHash = Hash.encrypt(token); // Encrypt desnecessário aqui, JWT já é seguro em si e adicionar uma camada extra de complexidade sem ganho real de segurança pode ser contraproducente.
         return tokenHash;
     }
 
     verify = (token: string): object | string => {
-        const tokenHashDecoded = Hash.decrypt(token);
+        const tokenHashDecoded = Hash.decrypt(token); // Decrypt desnecessário aqui, JWT já é seguro em si e adicionar uma camada extra de complexidade sem ganho real de segurança pode ser contraproducente.
         const tokenDecoded = jwt.verify(tokenHashDecoded, this.secret);
         return tokenDecoded;
     }
